@@ -1,9 +1,9 @@
 const std = @import("std");
 
-pub const zcmd = @import("src/main.zig"); // mark 1
+pub const matrix = @import("src/main.zig"); // mark 1
 
 pub fn build(b: *std.Build) !void {
     _ = b.addModule("matrix", .{ // mark 2
-        .source_file = .{ .path = "src/main.zig" },
+        .root_source_file = b.path("src/main.zig"),
     });
 }
