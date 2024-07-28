@@ -38,9 +38,9 @@ pub fn metrics(comptime T: type) type {
             self.allocator.destroy(self);
         }
 
-        pub fn randomize(self: *this) void {
+        pub fn randomize(self: *this, u: T) void {
             for (self.data) |*elem| {
-                elem.* = @floatCast(rand.float(f64) * 2 - 1);
+                elem.* = @floatCast(rand.float(f64) * u);
             }
         }
 
@@ -108,6 +108,14 @@ pub fn metrics(comptime T: type) type {
             const result = init(self.allocator, self.rows, self.cols) catch unreachable;
             for (result.data, 0..) |*elem, idx| {
                 elem.* = self.data[idx] + scalar;
+            }
+            return result;
+        }
+
+        pub fn subScalar(self: *const this, scalar: T) *this {
+            const result = init(self.allocator, self.rows, self.cols) catch unreachable;
+            for (result.data, 0..) |*elem, idx| {
+                elem.* = self.data[idx] - scalar;
             }
             return result;
         }
